@@ -55,5 +55,21 @@ RSpec.describe GildedRose do
         expect(items[0].quality).to eq 50
       end
     end
+
+    context 'Sulfuras' do
+      it 'never changes sell_in value' do
+        items = [Item.new('Sulfuras, Hand of Ragnaros', 47, 80)]
+        gilded_rose = GildedRose.new(items)
+        500.times { gilded_rose.update_quality } 
+        expect(items[0].sell_in).to eq 47
+      end
+      
+      it 'never changes quality value' do
+        items = [Item.new('Sulfuras, Hand of Ragnaros', 47, 80)]
+        gilded_rose = GildedRose.new(items)
+        500.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 80
+      end
+    end
   end
 end
