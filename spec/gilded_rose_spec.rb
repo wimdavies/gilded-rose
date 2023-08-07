@@ -23,7 +23,7 @@ RSpec.describe GildedRose do
         expect(items[0].sell_in).to eq -47
       end
 
-      it 'decrements quality on every tick' do
+      it 'decrements quality on every tick when sell_in >= 0' do
         items = [Item.new('Dagger', 47, 47)]
         gilded_rose = GildedRose.new(items)
         4.times { gilded_rose.update_quality } 
@@ -157,6 +157,43 @@ RSpec.describe GildedRose do
 
       it 'never decreases quality below 0' do
         items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 47, 43)]
+        gilded_rose = GildedRose.new(items)
+        500.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+    end
+
+    context 'Conjured Items' do
+      xit 'decrements sell_in on every tick' do
+        items = [Item.new('Conjured Dagger', 47, 47)]
+        gilded_rose = GildedRose.new(items)
+        4.times { gilded_rose.update_quality } 
+        expect(items[0].sell_in).to eq 43
+      end
+
+      xit 'decrements sell_in below 0' do
+        items = [Item.new('Conjured Dagger', 0, 0)]
+        gilded_rose = GildedRose.new(items)
+        47.times { gilded_rose.update_quality } 
+        expect(items[0].sell_in).to eq -47
+      end
+
+      xit 'decreases quality by 2 on every tick when sell_in >= 0' do
+        items = [Item.new('Conjured Dagger', 47, 40)]
+        gilded_rose = GildedRose.new(items)
+        10.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 20
+      end
+      # assuming 'twice as fast' degradation is intended to include behaviour below zero
+      xit 'decreases quality at 2x rate (i.e. by 4) when sell_in < 0' do
+        items = [Item.new('Conjured Dagger', 0, 8)]
+        gilded_rose = GildedRose.new(items)
+        2.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+
+      xit 'never decreases quality below 0' do
+        items = [Item.new('Conjured Dagger', 47, 43)]
         gilded_rose = GildedRose.new(items)
         500.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 0
