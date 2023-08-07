@@ -8,13 +8,13 @@ class GildedRose
 
       case item.name
       when 'Dagger'
-        return normal_update_quality(item)
+        normal_update_quality(item)
       when 'Aged Brie'
-        return aged_brie_update_quality(item)
+        aged_brie_update_quality(item)
       when 'Backstage passes to a TAFKAL80ETC concert'
-        return backstage_pass_update_quality(item)
+        backstage_pass_update_quality(item)
       when 'Sulfuras, Hand of Ragnaros'
-        return
+        sulfuras_update_quality(item)
       end
     end
   end
@@ -43,6 +43,10 @@ class GildedRose
     item.quality += 1
     item.quality += 1 if item.sell_in < 10
     item.quality += 1 if item.sell_in < 5
+  end
+
+  def sulfuras_update_quality(item)
+    return
   end
 end
 
