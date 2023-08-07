@@ -28,7 +28,9 @@ class GildedRose
           end
         end
       end
-        item.sell_in = item.sell_in - 1
+
+      decrement_sell_in(item)
+
       if item.sell_in < 0
         if item.name != "Aged Brie"
           if item.name != "Backstage passes to a TAFKAL80ETC concert"
@@ -45,6 +47,10 @@ class GildedRose
         end
       end
     end
+  end
+
+  def decrement_sell_in(item)
+    item.sell_in = item.sell_in - 1
   end
 end
 
