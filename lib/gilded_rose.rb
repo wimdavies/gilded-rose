@@ -7,6 +7,18 @@ class GildedRose
     @items.each do |item|
       return if item.name == 'Sulfuras, Hand of Ragnaros'
 
+      if item.name == 'Dagger'
+        if item.quality != 0
+          if item.sell_in > 0  
+            item.quality -= 1
+          else
+            item.quality -= 2
+          end
+        end
+        item.sell_in -= 1
+        return
+      end
+
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
         decrement_quality_if_greater_than_zero(item)
       else
