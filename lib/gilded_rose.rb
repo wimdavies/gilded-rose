@@ -5,7 +5,6 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      return if item.name == 'Sulfuras, Hand of Ragnaros'
 
       case item.name
       when 'Dagger'
@@ -14,6 +13,8 @@ class GildedRose
         return aged_brie_update_quality(item)
       when 'Backstage passes to a TAFKAL80ETC concert'
         return backstage_pass_update_quality(item)
+      when 'Sulfuras, Hand of Ragnaros'
+        return
       end
 
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
