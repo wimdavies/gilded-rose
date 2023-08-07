@@ -8,15 +8,7 @@ class GildedRose
       return if item.name == 'Sulfuras, Hand of Ragnaros'
 
       if item.name == 'Dagger'
-        if item.quality != 0
-          if item.sell_in > 0  
-            item.quality -= 1
-          else
-            item.quality -= 2
-          end
-        end
-        item.sell_in -= 1
-        return
+        return normal_update_quality(item)
       end
 
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
@@ -55,6 +47,14 @@ class GildedRose
         end
       end
     end
+  end
+
+  def normal_update_quality(item)
+    item.sell_in -= 1
+    return if item.quality == 0
+    item.quality -= 1
+    item.quality -= 1 if item.sell_in <= 0
+    return
   end
 
   def decrement_sell_in(item)
