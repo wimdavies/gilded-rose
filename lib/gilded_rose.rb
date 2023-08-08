@@ -5,16 +5,15 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-
       case item.name
-      when 'Dagger'
-        normal_update_quality(item)
       when 'Aged Brie'
         aged_brie_update_quality(item)
       when 'Backstage passes to a TAFKAL80ETC concert'
         backstage_pass_update_quality(item)
       when 'Sulfuras, Hand of Ragnaros'
         sulfuras_update_quality(item)
+      else
+        normal_update_quality(item)
       end
     end
   end
