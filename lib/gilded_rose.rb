@@ -40,8 +40,8 @@ class GildedRose
     return if item.quality >= 50
 
     item.quality += 1
-    item.quality += 1 if item.sell_in < 10
-    item.quality += 1 if item.sell_in < 5
+    item.quality += 1 if item.sell_in < 10 && item.quality < 50
+    item.quality += 1 if item.sell_in < 5 && item.quality < 50
   end
 
   def sulfuras_update_quality(item)
