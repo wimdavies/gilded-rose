@@ -64,6 +64,16 @@ RSpec.describe GildedRose do
         500.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 0
       end
+
+      it "will act upon items with other 'Normal' names" do
+        items = [Item.new('Sword', 47, 47), Item.new('Shield', 47, 47)]
+        gilded_rose = GildedRose.new(items)
+        4.times { gilded_rose.update_quality } 
+        expect(items[0].sell_in).to eq 43
+        expect(items[0].quality).to eq 43
+        expect(items[1].sell_in).to eq 43
+        expect(items[1].quality).to eq 43
+      end
     end
 
     context 'Aged Brie' do
@@ -88,11 +98,25 @@ RSpec.describe GildedRose do
         expect(items[0].quality).to eq 30
       end
 
-      it 'increases quality by 2 on each tick when sell_in < 0' do
+      it 'increases quality by 2 on each tick when sell_in <= 0' do
         items = [Item.new('Aged Brie', 0, 20)]
         gilded_rose = GildedRose.new(items)
         10.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 40
+      end
+
+      it 'does not increase quality above 50 when sell_in == 0 and quality == 49' do
+        items = [Item.new('Aged Brie', 0, 49)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+
+      it 'does not increase quality above 50 when sell_in < 0 and quality == 49' do
+        items = [Item.new('Aged Brie', -1, 49)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
       end
 
       it 'never increases quality above 50' do
