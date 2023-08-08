@@ -30,11 +30,32 @@ RSpec.describe GildedRose do
         expect(items[0].quality).to eq 43
       end
 
-      it 'decreases quality at 2x rate when sell_in is less than 0' do
+      it 'decreases quality at 2x rate when sell_in is <= 0' do
         items = [Item.new('Dagger', 0, 10)]
         gilded_rose = GildedRose.new(items)
         4.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 2
+      end
+
+      it 'does not decrease quality below 0 when sell_in == 1 and quality == 1' do
+        items = [Item.new('Dagger', 1, 1)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+      
+      it 'does not decrease quality below 0 when sell_in == 0 and quality == 1' do
+        items = [Item.new('Dagger', 0, 1)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+
+      it 'does not decrease quality below 0 when sell_in < 0 and quality == 1' do
+        items = [Item.new('Dagger', -43, 1)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
       end
 
       it 'never decreases quality below 0' do
