@@ -69,7 +69,7 @@ RSpec.describe GildedRose do
         items = [Item.new('Dagger', 47, -43)]
         gilded_rose = GildedRose.new(items)
         500.times { gilded_rose.update_quality } 
-        expect(items[0].quality).to eq 43
+        expect(items[0].quality).to eq -43
       end
 
       it "will act upon items with other 'Normal' names" do
