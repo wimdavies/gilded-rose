@@ -58,11 +58,18 @@ RSpec.describe GildedRose do
         expect(items[0].quality).to eq 0
       end
 
-      it 'never decreases quality below 0' do
+      it 'never actively decreases quality below 0' do
         items = [Item.new('Dagger', 47, 43)]
         gilded_rose = GildedRose.new(items)
         500.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 0
+      end
+
+      it 'never changes a quality initalized < 0' do
+        items = [Item.new('Dagger', 47, -43)]
+        gilded_rose = GildedRose.new(items)
+        500.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 43
       end
 
       it "will act upon items with other 'Normal' names" do
@@ -90,12 +97,19 @@ RSpec.describe GildedRose do
         47.times { gilded_rose.update_quality } 
         expect(items[0].sell_in).to eq -47
       end
-
+      
       it 'increments quality when sell_in is >= 0' do
         items = [Item.new('Aged Brie', 20, 20)]
         gilded_rose = GildedRose.new(items)
         10.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 30
+      end
+      
+      it 'increments quality initalized < 0' do
+        items = [Item.new('Aged Brie', 500, -43)]
+        gilded_rose = GildedRose.new(items)
+        43.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
       end
 
       it 'increases quality by 2 on each tick when sell_in <= 0' do
@@ -103,6 +117,13 @@ RSpec.describe GildedRose do
         gilded_rose = GildedRose.new(items)
         10.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 40
+      end
+
+      it 'increases by 2 on each tick a quality initalized < 0 when sell_in <= 0' do
+        items = [Item.new('Aged Brie', -500, -43)]
+        gilded_rose = GildedRose.new(items)
+        43.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 43
       end
 
       it 'does not increase quality above 50 when sell_in == 0 and quality == 49' do
@@ -141,6 +162,13 @@ RSpec.describe GildedRose do
         500.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 80
       end
+
+      it 'does not change an incorrectly-initialized quality to the canonical value' do
+        items = [Item.new('Sulfuras, Hand of Ragnaros', 47, -43)]
+        gilded_rose = GildedRose.new(items)
+        500.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq -43
+      end
     end
 
     context 'Backstage Pass' do
@@ -163,6 +191,13 @@ RSpec.describe GildedRose do
         gilded_rose = GildedRose.new(items)
         10.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 30
+      end
+
+      it 'increments quality initalized < 0' do
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 500, -43)]
+        gilded_rose = GildedRose.new(items)
+        43.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
       end
 
       it 'never increases quality above 50' do
