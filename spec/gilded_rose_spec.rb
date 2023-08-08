@@ -193,13 +193,55 @@ RSpec.describe GildedRose do
         expect(items[0].quality).to eq 40
       end
 
+      it 'does not increase quality above 50 when sell_in == 1 and quality == 49' do
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 1, 49)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+
+      it 'does not increase quality above 50 when sell_in == 2 and quality == 49' do
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 2, 49)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+
+      it 'does not increase quality above 50 when sell_in == 3 and quality == 49' do
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 3, 49)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+
+      it 'does not increase quality above 50 when sell_in == 1 and quality == 48' do
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 1, 48)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+
+      it 'does not increase quality above 50 when sell_in == 2 and quality == 48' do
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 2, 48)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+
+      it 'does not increase quality above 50 when sell_in == 3 and quality == 48' do
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 3, 48)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+      
       it 'sets quality to 0 as soon as sell_in ticks below 0' do
-        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 0, 43)]
+        items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 0, 47)]
         gilded_rose = GildedRose.new(items)
         1.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 0
       end
-
+      
       it 'never decreases quality below 0' do
         items = [Item.new('Backstage passes to a TAFKAL80ETC concert', 47, 43)]
         gilded_rose = GildedRose.new(items)
