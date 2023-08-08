@@ -140,6 +140,13 @@ RSpec.describe GildedRose do
         expect(items[0].quality).to eq 50
       end
 
+      it 'increases quality to 50 when sell_in < 0 and quality == 48' do
+        items = [Item.new('Aged Brie', -1, 48)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 50
+      end
+
       it 'never increases quality above 50' do
         items = [Item.new('Aged Brie', 20, 49)]
         gilded_rose = GildedRose.new(items)
