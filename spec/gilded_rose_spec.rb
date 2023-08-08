@@ -230,10 +230,73 @@ RSpec.describe GildedRose do
         expect(items[0].quality).to eq 20
       end
       # assuming 'twice as fast' degradation is intended to include behaviour below zero
-      xit 'decreases quality at 2x rate (i.e. by 4) when sell_in < 0' do
-        items = [Item.new('Conjured Dagger', 0, 8)]
+      xit 'decreases quality at 2x rate (i.e. by 4) when sell_in <= 0' do
+        items = [Item.new('Conjured Dagger', 0, 10)]
         gilded_rose = GildedRose.new(items)
         2.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 2
+      end
+
+      xit 'does not decrease quality below 0 when sell_in == 1 and quality == 1' do
+        items = [Item.new('Conjured Dagger', 1, 1)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+      
+      xit 'does not decrease quality below 0 when sell_in == 0 and quality == 1' do
+        items = [Item.new('Conjured Dagger', 0, 1)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+
+      xit 'does not decrease quality below 0 when sell_in < 0 and quality == 1' do
+        items = [Item.new('Conjured Dagger', -43, 1)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+      
+      xit 'does not decrease quality below 0 when sell_in == 1 and quality == 2' do
+        items = [Item.new('Conjured Dagger', 1, 2)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+      
+      xit 'does not decrease quality below 0 when sell_in == 0 and quality == 2' do
+        items = [Item.new('Conjured Dagger', 0, 2)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+
+      xit 'does not decrease quality below 0 when sell_in < 0 and quality == 2' do
+        items = [Item.new('Conjured Dagger', -43, 2)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+            
+      xit 'does not decrease quality below 0 when sell_in == 1 and quality == 3' do
+        items = [Item.new('Conjured Dagger', 1, 3)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+
+      xit 'does not decrease quality below 0 when sell_in == 0 and quality == 3' do
+        items = [Item.new('Conjured Dagger', 0, 3)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
+        expect(items[0].quality).to eq 0
+      end
+
+      xit 'does not decrease quality below 0 when sell_in < 0 and quality == 3' do
+        items = [Item.new('Conjured Dagger', -43, 3)]
+        gilded_rose = GildedRose.new(items)
+        1.times { gilded_rose.update_quality } 
         expect(items[0].quality).to eq 0
       end
 
