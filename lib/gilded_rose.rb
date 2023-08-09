@@ -7,18 +7,18 @@ class GildedRose
     @items.each do |item|
       case item.name
       when 'Aged Brie'
-        aged_brie_update_quality(item)
+        aged_brie_update(item)
       when 'Backstage passes to a TAFKAL80ETC concert'
-        backstage_pass_update_quality(item)
+        backstage_pass_update(item)
       when 'Sulfuras, Hand of Ragnaros'
-        sulfuras_update_quality(item)
+        sulfuras_update(item)
       else
-        normal_update_quality(item)
+        normal_update(item)
       end
     end
   end
 
-  def normal_update_quality(item)
+  def normal_update(item)
     item.sell_in -= 1
     return if item.quality <= 0
 
@@ -26,7 +26,7 @@ class GildedRose
     item.quality -= 1 if item.sell_in <= 0 && item.quality > 1
   end
 
-  def aged_brie_update_quality(item)
+  def aged_brie_update(item)
     item.sell_in -= 1
     return if item.quality >= 50
 
@@ -34,7 +34,7 @@ class GildedRose
     item.quality += 1 if item.sell_in <= 0 && item.quality < 50
   end
 
-  def backstage_pass_update_quality(item)
+  def backstage_pass_update(item)
     item.sell_in -= 1
     return item.quality = 0 if item.sell_in < 0
     return if item.quality >= 50
@@ -44,10 +44,12 @@ class GildedRose
     item.quality += 1 if item.sell_in < 5 && item.quality < 50
   end
 
-  def sulfuras_update_quality(item)
+  def sulfuras_update(item)
     return
   end
 end
+
+
 
 class Item
   attr_accessor :name, :sell_in, :quality
