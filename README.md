@@ -46,3 +46,14 @@ for you).
 
 Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a
 legendary item and as such its Quality is 80 and it never alters.
+
+## My process
+
+(notes)
+
+- make notes on the requirements, build my understanding of them
+- write tests to cover the requirements, playing with the code in the REPL to explore areas where my understanding was unclear or questions had emerged
+- extract the procedures related to each type of item into a specific update method, which was called from a switch statement
+- realise I have failed to account for certain boundary conditions in my test suite. Test my code funcitonality against the legacy code, realise I have failed to preserve this behaviour. Write tests to cover these cases, and TDD code that gets me back to green
+- refactor switch statement into an `Updater` class containing a factory, `Updater.for`, that instantiates polymorphic variants that wrap and update the `Item`
+- take this to a coaching session with Kay, receive feedback that `Updater` is not truly Open/Closed because I would have to modify the hard-coded conditional in order for it to select a new `ConjuredUpdater`
