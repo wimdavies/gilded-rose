@@ -32,49 +32,37 @@ class Updater
 
   def update
   end
-
-  def decrement_sell_in
-    item.sell_in -= 1
-  end
-
-  def decrement_quality
-    item.quality -= 1
-  end
-
-  def increment_quality
-    item.quality += 1
-  end
 end
 
 class NormalUpdater < Updater
   def update
-    decrement_sell_in
+    item.sell_in -= 1
     return if item.quality <= 0
 
-    decrement_quality
-    decrement_quality if item.sell_in <= 0 && item.quality > 1
+    item.quality -= 1
+    item.quality -= 1 if item.sell_in <= 0 && item.quality > 1
   end
 end
 
 class BrieUpdater < Updater
   def update
-    decrement_sell_in
+    item.sell_in -= 1
     return if item.quality >= 50
 
-    increment_quality
-    increment_quality if item.sell_in <= 0 && item.quality < 50
+    item.quality += 1
+    item.quality += 1 if item.sell_in <= 0 && item.quality < 50
   end
 end
 
 class PassUpdater < Updater
   def update
-    decrement_sell_in
+    item.sell_in -= 1
     return item.quality = 0 if item.sell_in < 0
     return if item.quality >= 50
 
-    increment_quality
-    increment_quality if item.sell_in < 10 && item.quality < 50
-    increment_quality if item.sell_in < 5 && item.quality < 50
+    item.quality += 1
+    item.quality += 1 if item.sell_in < 10 && item.quality < 50
+    item.quality += 1 if item.sell_in < 5 && item.quality < 50
   end
 end
 
