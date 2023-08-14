@@ -5,6 +5,7 @@ require_relative 'updater'
 require_relative 'brie_updater'
 require_relative 'pass_updater'
 require_relative 'sulfuras_updater'
+require_relative 'conjured_updater'
 
 class GildedRose
   def initialize(items)
