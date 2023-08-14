@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Updater
   def self.for(item)
-    registry.find {|candidate| candidate.handles?(item)}.new(item)
+    registry.find { |candidate| candidate.handles?(item) }.new(item)
   end
-  
+
   def self.registry
     @registry ||= []
   end

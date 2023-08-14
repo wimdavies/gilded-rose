@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'updater'
 
 class SulfurasUpdater < Updater
@@ -7,6 +9,5 @@ class SulfurasUpdater < Updater
 
   Updater.register(self)
 
-  def update
-  end
+  def update; end
 end

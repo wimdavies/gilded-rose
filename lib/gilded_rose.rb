@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'item'
 require_relative 'updater'
 require_relative 'brie_updater'

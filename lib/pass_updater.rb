@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'updater'
 
 class PassUpdater < Updater
@@ -10,7 +12,7 @@ class PassUpdater < Updater
 
   def update
     item.sell_in -= 1
-    return item.quality = 0 if item.sell_in < 0
+    return item.quality = 0 if item.sell_in.negative?
     return if item.quality >= 50
 
     item.quality += 1
