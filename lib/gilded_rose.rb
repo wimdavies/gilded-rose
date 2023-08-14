@@ -12,17 +12,23 @@ end
 
 class Updater
   def self.for(item)
-    case item.name
-    when 'Aged Brie'
-      BrieUpdater
-    when /backstage pass/i
-      PassUpdater
-    when 'Sulfuras, Hand of Ragnaros'
-      SulfurasUpdater
-    else
-      NormalUpdater
-    end.new(item)
+    registry.find {|candidate| candidate.handles?(item)}.new(item)
   end
+  
+  def self.registry
+    @registry ||= []
+  end
+
+  def self.register(candidate)
+    registry.prepend(candidate)
+  end
+
+  # Updater defaults to handling Normal Items
+  def self.handles?(item)
+    true
+  end
+
+  Updater.register(self)
 
   attr_accessor :item
 
@@ -30,11 +36,6 @@ class Updater
     @item = item
   end
 
-  def update
-  end
-end
-
-class NormalUpdater < Updater
   def update
     item.sell_in -= 1
     return if item.quality <= 0
@@ -45,6 +46,12 @@ class NormalUpdater < Updater
 end
 
 class BrieUpdater < Updater
+  def self.handles?(item)
+    item.name == 'Aged Brie'
+  end
+
+  Updater.register(self)
+
   def update
     item.sell_in -= 1
     return if item.quality >= 50
@@ -55,6 +62,13 @@ class BrieUpdater < Updater
 end
 
 class PassUpdater < Updater
+  def self.handles?(item)
+    # returns `true` for case-insensitive 'backstage pass' substring
+    item.name.match?(/backstage pass/i)
+  end
+
+  Updater.register(self)
+
   def update
     item.sell_in -= 1
     return item.quality = 0 if item.sell_in < 0
@@ -67,6 +81,14 @@ class PassUpdater < Updater
 end
 
 class SulfurasUpdater < Updater
+  def self.handles?(item)
+    item.name == 'Sulfuras, Hand of Ragnaros'
+  end
+
+  Updater.register(self)
+
+  def update
+  end
 end
 
 class Item
