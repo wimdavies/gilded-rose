@@ -4,8 +4,7 @@ require_relative 'updater'
 
 class PassUpdater < Updater
   def self.handles?(item)
-    # returns `true` for case-insensitive 'backstage pass' substring
-    item.name.match?(/backstage pass/i)
+    item.name.start_with?('Backstage pass')
   end
 
   Updater.register(self)
