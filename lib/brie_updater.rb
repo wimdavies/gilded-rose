@@ -1,15 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'updater'
-
-class BrieUpdater < Updater
-  def self.handles?(item)
+class BrieUpdater
+  def handles?(item)
     item.name == 'Aged Brie'
   end
 
-  Updater.register(self)
-
-  def update
+  def update(item)
     item.sell_in -= 1
     return if item.quality >= 50
 

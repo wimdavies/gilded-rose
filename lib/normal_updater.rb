@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class ConjuredUpdater
+class NormalUpdater
   def handles?(item)
-    item.name.start_with?('Conjured')
+    true
   end
 
   def update(item)
@@ -10,8 +10,6 @@ class ConjuredUpdater
     return if item.quality <= 0
 
     item.quality -= 1
-    item.quality -= 1 if item.quality > 0
-    item.quality -= 1 if item.sell_in <= 0 && item.quality > 0
     item.quality -= 1 if item.sell_in <= 0 && item.quality > 0
   end
 end

@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'updater'
-
-class SulfurasUpdater < Updater
-  def self.handles?(item)
+class SulfurasUpdater
+  def handles?(item)
     item.name == 'Sulfuras, Hand of Ragnaros'
   end
 
-  Updater.register(self)
-
-  def update; end
+  def update(item); end
 end
